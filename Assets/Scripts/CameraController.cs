@@ -33,9 +33,12 @@ namespace Archer
         [SerializeField]
         private float travelTime;
 
+
         private void Update()
         {
-  
+            Vector3 deseiregPosition = target.transform.position + (Quaternion.Euler(0, angle, 0) * offset) - (target.forward*distance);
+            this.transform.position = deseiregPosition;
+            transform.LookAt(target.position + offset);
         }
 
     }

@@ -15,7 +15,7 @@ public class Linterna : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = target.position;
+        this.transform.position = target.position + new Vector3(0,1,0);
         this.transform.rotation = target.rotation;
     }
 }

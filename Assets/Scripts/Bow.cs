@@ -29,6 +29,7 @@ namespace Archer
       
 
         private Animator animator;
+        private AudioSource myAudioSoruce;
 
         private void Awake()
         {
@@ -37,6 +38,8 @@ namespace Archer
             fireInputReference.action.performed += Action_performed;
 
             animator = GetComponent<Animator>();
+
+            myAudioSoruce = this.GetComponent<AudioSource>();
         }
 
         private void Action_performed(InputAction.CallbackContext obj)
@@ -47,22 +50,26 @@ namespace Archer
 
         private IEnumerator Shoot()
         {
-          
+            // Animar el tiro del arco
+            animator.SetTrigger("Shoot");
 
             yield return new WaitForSeconds(0.3f);
 
 
             // Instanciar una flecha
-           
+            GameObject newArrow = Instantiate(arrowPrefab);
+
+            // Generar sonido de lanzamiento audio.
+            myAudioSoruce.Play();
 
             // Colocar la flecha en el punto de referencia de la mano de la arquera
-         
+            newArrow.transform.position = handPosition.position;
 
             // Orientar la flecha hacia delante con respecto a la arquera
-           
+            newArrow.transform.rotation = handPosition.rotation;
 
             // Aplicar una fuerza a la flecha para que salga disparada
-          
+            newArrow.GetComponent<Rigidbody>().AddForce(handPosition.forward * force);
         }
     }
 
